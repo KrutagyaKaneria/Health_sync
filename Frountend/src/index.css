@@ -1,1 +1,51 @@
 @import "tailwindcss";
+
+@layer base {
+    section {
+        @apply py-[75px];
+    }
+}
+
+@layer components {
+    .container {
+        @apply max-w-full w-[1440px] px-5 mx-auto;
+    }
+
+    .btn {
+        @apply py-[15px] rounded-[50px] text-white font-[600] mt-[38px] bg-blue-600;
+    }
+
+    .heading {
+        @apply text-[44px] leading-[30px] font-[400] text-gray-700 mt-[18px];
+    }
+}
+
+@layer utilities {
+    .text_para {
+        @apply text-[16px] leading-7 mt-3;
+    }
+}
+
+/* Responsive Styles */
+@media (max-width: 1024px) {
+    .container {
+        width: 100%;
+    }
+
+    section {
+        padding-top: 35px;
+        padding-bottom: 35px;
+    }
+}
+
+@media (max-width: 768px) {
+    .heading {
+        font-size: 26px;
+        line-height: 36px;
+    }
+}
+
+.text_para {
+    @apply text-[16px] leading-7 mt-3;
+}
+
