@@ -19,6 +19,22 @@ app.get('/',(req,res) => {
     res.send("Api is running")
 })
 
+// daatabase connnection
+mongoose.set('strictQuery',false)
+const connectDB = async() => {
+    try{
+        mongoose.connect(process.env.MONGODB_URL, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        })
+
+        console.log("MongoDB database is connected")
+
+    } catch(err) {
+        console.log("Mongodb database is connection failed")
+    }
+}
+
 
 // middlewar
 app.use(express.json())
@@ -27,5 +43,6 @@ app.use(cors(corsOptions));
 
 
 app.listen(port, () => {
+    connectDB();
     console.log("Server is running on port" + port);
 })
