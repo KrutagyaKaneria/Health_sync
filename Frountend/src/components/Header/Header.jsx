@@ -1,8 +1,11 @@
 import React from 'react'
 import { useEffect,useRef } from 'react'
 import Logo from "../../assets/images/logo.png"
+import UserImg from "../../assets/images/avatar-icon.png"
+import {BiMenu} from "react-icons/bi"
 import {NavLink,Link} from 'react-router-dom'
-import "../../index.css";;
+import "../../index.css";
+import "../../App.css"
 
 
 const navLinks = [
@@ -24,18 +27,44 @@ const navLinks = [
   },
 ]
 
+
+
+
+
 const Header = () => {
+    const headerRef = useRef(null)
+    const menuRef = useRef(null)
+  
+  const handleStickyHeader = () => {
+    window.addEventListener('scroll', () => {
+      if(document.body.scrollTop > 80 || document.documentElement.scrollTop > 80){
+        headerRef.current.classList.add('sticky_header')
+      }else{
+        headerRef.current.classList.remove('sticky_header')
+      }
+    })
+  }
+  
+  useEffect(() => {
+    handleStickyHeader();
+    
+    return () => window.removeEventListener('scroll',handleStickyHeader);
+  });
+
+  const toggleMenu = () => menuRef.current.classList.toggle('show_menu')
+
   return (
-    <header className='header flex items-center'>
+    <header className="bg-[url('./assets/images/mask.png')] bg-no-repeat bg-center bg-cover w-full h-[100px] leading-[100px]" ref={headerRef}>
       <div className='max-w-full w-[1440px] px-5 mx-auto'>
         <div className='flex items-center justify-between'>
+          {/* logo */}
           <div>
             <img src={Logo} alt="" />
           </div>
 
           {/* menu */}
 
-          <div className="navigation">
+          <div className="navigation" ref={menuRef} onClick={toggleMenu}>
             <ul className='flex items-center gap-[2.7rem]'>
               {
                 navLinks.map((link,index)=>
@@ -49,6 +78,27 @@ const Header = () => {
             </ul>
           </div>
 
+          {/* nav-right */}
+
+          <div className='flex items-center gap-4'>
+            <div className='hidden'>
+              <Link to='./'>
+              <figure className='w-[35px] h-[35px] rounded-full cursor-pointer'>
+                <img src={UserImg} className='w-full rounded-full' alt="" />
+              </figure>
+              </Link>
+            </div>
+
+            <Link to='/login'>
+            <button className='bg-[#0067FF] py-2 px-6 text-white font-[600] h-[44px] flex items-center justify-center rounded-[10px]'>Login</button>
+            </Link>
+
+            <span className='md:hidden' onClick={toggleMenu}>
+              <BiMenu className='w-6 h-6 cursor-pointer' />
+            </span>
+
+
+          </div>
         </div>
       </div>
     </header>
