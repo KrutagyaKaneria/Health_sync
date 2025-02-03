@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-@layer base {
+/* @layer base {
     section {
         @apply py-[75px];
     }
@@ -27,7 +27,7 @@
 }
 
 /* Responsive Styles */
-@media (max-width: 1024px) {
+/* @media (max-width: 1024px) {
     .container {
         width: 100%;
     }
@@ -47,5 +47,5 @@
 
 .text_para {
     @apply text-[16px] leading-7 mt-3;
-}
+} */
 
