@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
-
+import Doctor from "../models/DoctorSchema.js"
 
 export const register = async (req,res) => {
     const {email, password, name, role, photo, gender} = req.body
@@ -46,7 +46,7 @@ export const register = async (req,res) => {
         }
         await user.save()
         res.status(200).json({success:true, message:"User successfully created"})
-
+        
     } catch(err) {
         res.status(500).json({success:true, message:"Internal server error"})
     };
