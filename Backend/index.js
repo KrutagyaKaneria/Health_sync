@@ -6,7 +6,7 @@ import dotenv from 'dotenv'
 import authRoute from './Routes/auth.js' 
 
 
-dotenv.config()
+dotenv.config() 
 
 
 const app = express()
