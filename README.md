@@ -113,3 +113,7 @@ A **web-based platform** connecting patients, doctors, and hospitals in an effic
 
 ## 🎨 **Figma Design**
 Explore the design prototype on Figma: [**HealthSync Figma Design**](https://www.figma.com/design/FKWyOSkxyp9z6sxprGhNGN/Hospital-website-design?node-id=0-1&t=QmXlnhZ4BJNxfSS1-1)
+
+📌 Deployed Server Link
+Access the live backend server here 
+[HealthSync Server](https://health-sync-e8lf.onrender.com)
