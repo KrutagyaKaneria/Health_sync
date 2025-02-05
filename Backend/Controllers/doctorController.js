@@ -1,9 +1,9 @@
-import User from "../models/UserSchema.js";
+import Doctor from "../models/DoctorSchema.js";
 
-export const updateUser = async(req,res) => {
+export const updateDoctor = async(req,res) => {
     const id = req.params.id
     try{
-        const updateUser = await User.findByIdAndUpdate(id, {$set:req.body}, {new:true})
+        const updateDoctor = await Doctor.findByIdAndUpdate(id, {$set:req.body}, {new:true})
         res.status(200).json({sucecess:true, message:"Sucessfully updated" , data:updateUser})
     } catch (err) {
         res.status(500).json({sucecess:false, message:"Failed to updated"})
@@ -11,10 +11,10 @@ export const updateUser = async(req,res) => {
 }
 
 
-export const deleteUser = async(req,res) => {
+export const deleteDoctor = async(req,res) => {
     const id = req.params.id
     try{
-         await User.findByIdAndDelete(id, )
+         await Doctor.findByIdAndDelete(id, )
         res.status(200).json({sucecess:true, message:"Sucessfully Deleted",})
     } catch (err) {
         res.status(500).json({sucecess:false, message:"Failed to Delete"})
@@ -22,21 +22,21 @@ export const deleteUser = async(req,res) => {
 }
 
 
-export const getSingleUser = async(req,res) => {
+export const getSingleDoctor = async(req,res) => {
     const id = req.params.id
     try{
-        const user = await User.findById(id).select("-password");
-        res.status(200).json({sucecess:true, message:"Sucessfully Found" , data:user})
+        const doctor = await Doctor.findById(id).select("-password");
+        res.status(200).json({sucecess:true, message:"Sucessfully Found" , data:doctor})
     } catch (err) {
         res.status(400).json({sucecess:false, message:"Failed to found user"})
     }
 }
 
-export const getAllUser = async(req,res) => {
+export const getAllDoctor = async(req,res) => {
 
     try{
-        const users = await User.find({}).select("-password")
-        res.status(200).json({sucecess:true, message:"Sucessfully Found" , data:users})
+        const doctors = await Doctor.find({}).select("-password")
+        res.status(200).json({sucecess:true, message:"Sucessfully Found" , data:doctors})
     } catch (err) {
         res.status(400).json({sucecess:false, message:"Not found"})
     }
