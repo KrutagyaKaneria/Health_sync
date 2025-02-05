@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
 import User from '../models/UserSchema.js'
 import Doctor from "../models/DoctorSchema.js"
-import crypto from 'crypto-browserify';
+
 
 
 const generateToken = user => {

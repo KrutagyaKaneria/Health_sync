@@ -3,7 +3,9 @@ import cookieParser from "cookie-parser"
 import cors from 'cors'
 import mongoose from "mongoose"
 import dotenv from 'dotenv'
-import authRoute from './Routes/auth.js' 
+import AuthRoute from './Routes/auth.js'
+import UserRoute from './Routes/user.js'
+import doctorRoute from "./Routes/doctor.js"
 
 
 dotenv.config() 
@@ -41,7 +43,10 @@ const connectDB = async() => {
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors(corsOptions));
-app.use('/api/v1/auth', authRoute);
+app.use('/api/v1/auth', AuthRoute);
+app.use('/api/v1/users', UserRoute);
+app.use('/api/v1/doctors', doctorRoute);
+
 
 
 app.listen(port, () => {
