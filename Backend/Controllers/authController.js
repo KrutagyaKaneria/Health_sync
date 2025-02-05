@@ -7,7 +7,7 @@ import Doctor from "../models/DoctorSchema.js"
 
 const generateToken = user => {
     return jwt.sign({id:user._id,role:user.role}, process.env.JWT_SECRET_key, {
-        expiresIn:'15d',
+        expiresIn:'60d',
     })
  }
 
