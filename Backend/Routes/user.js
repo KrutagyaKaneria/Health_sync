@@ -1,6 +1,6 @@
 import express from 'express'
 import {updateUser,deleteUser,getAllUser,getSingleUser} from '../Controllers/userController.js'
-import { authenticate, restrict } from '../auth/verify token.js';
+import { authenticate, restrict } from '../auth/verifyToken.js';
 
 const router = express.Router()
 

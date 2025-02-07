@@ -6,6 +6,7 @@ import dotenv from 'dotenv'
 import AuthRoute from './Routes/auth.js'
 import UserRoute from './Routes/user.js'
 import doctorRoute from "./Routes/doctor.js"
+import reviewRoute from "./Routes/review.js"
 
 
 dotenv.config() 
@@ -22,11 +23,12 @@ app.get('/',(req,res) => {
     res.send("Api is running")
 })
 
+
 // daatabase connnection
 mongoose.set('strictQuery',false)
 const connectDB = async() => {
     try{
-        mongoose.connect(process.env.MONGODB_URL, {
+       await mongoose.connect(process.env.MONGODB_URL, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         })
@@ -46,10 +48,11 @@ app.use(cors(corsOptions));
 app.use('/api/v1/auth', AuthRoute);
 app.use('/api/v1/users', UserRoute);
 app.use('/api/v1/doctors', doctorRoute);
-
+app.use('/api/v1/reviews', reviewRoute);
 
 
 app.listen(port, () => {
     connectDB();
     console.log("Server is running on port" + port);
 })
+

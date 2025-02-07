@@ -1,10 +1,10 @@
 import Doctor from "../models/DoctorSchema.js";
 
 export const updateDoctor = async(req,res) => {
-    const id = req.params.id
+    const id = req.params.id;
     try{
-        const updateDoctor = await Doctor.findByIdAndUpdate(id, {$set:req.body}, {new:true})
-        res.status(200).json({sucecess:true, message:"Sucessfully updated" , data:updateUser})
+        const updateDoctor = await Doctor.findByIdAndUpdate(id, {$set : req.body}, {new:true})
+        res.status(200).json({sucecess:true, message:"Sucessfully updated" , data:updateDoctor})
     } catch (err) {
         res.status(500).json({sucecess:false, message:"Failed to updated"})
     }
@@ -47,12 +47,12 @@ export const getAllDoctor = async(req,res) => {
                 ]
         }).select("-password");
         } else{
-            const doctors = await Doctor.find ({isApproved:"approved"}).select("-password");
+             doctors = await Doctor.find ({isApproved:"approved"}).select("-password");
         }
 
         
 
-        res.status(200).json({sucecess:true, message:"Sucessfully Found" , data:doctors})
+        res.status(200).json({sucecess:true, message:"User Found" , data:doctors})
     } catch (err) {
         res.status(400).json({sucecess:false, message:"Not found"})
     }

@@ -2,18 +2,25 @@ import jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
 import User from '../models/UserSchema.js'
 import Doctor from "../models/DoctorSchema.js"
+import dotenv from 'dotenv'
 
+dotenv.config() 
 
 
 const generateToken = user => {
-    return jwt.sign({id:user._id,role:user.role}, process.env.JWT_SECRET_key, {
-        expiresIn:'60d',
-    })
+    return jwt.sign(
+        {id: user._id, role:user.role},
+        process.env.JWT_SECRET_KEY, 
+        {
+        expiresIn:'15d',
+    }
+)
  }
+ 
 
 
 export const register = async (req,res) => {
-    const {email, password, name, role, photo, gender} = req.body
+    const {email, password, name, role, photo, gender} = req.body;
     try {
 
         let user = null
@@ -85,7 +92,9 @@ export const login = async (req,res) => {
             return res.ststus(404).json({message: "User not found"});
         }
 
-        const isPasswordMatch = await bcrypt.compare(req.body.password,user.password)
+        const isPasswordMatch = await bcrypt.compare(
+            req.body.password,
+            user.password);
 
         if(!isPasswordMatch){
             return res.status(400).json({status:false, message:"Invalid credental"});
@@ -95,13 +104,11 @@ export const login = async (req,res) => {
 
         const token = generateToken(user);
 
-        const {password,role,appointments,...rest} = user._doc
+        const {password,role,appointments, ...rest} = user._doc
 
-        res
-        return res.status(200).json({status:true, message:"Successfuly login" , token, data: {...rest}, role});
+        res.status(200).json({status:true, message:"Successfuly login" , token, data: {...rest}, role});
 
     } catch (err) {
-        res
-        return res.status(500).json({status:false, message:"Failed login"});
+        res.status(500).json({status:false, message:"Failed login"});
     }
 };
