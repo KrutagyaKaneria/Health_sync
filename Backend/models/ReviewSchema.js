@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
-import Doctor from "./DoctorSchema";
+import Doctor from "./DoctorSchema.js";  // Relative path with `.js`
+
 
 const reviewSchema = new mongoose.Schema(
   {
