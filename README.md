@@ -117,3 +117,9 @@ Explore the design prototype on Figma: [**HealthSync Figma Design**](https://www
 📌 Deployed Server Link
 Access the live backend server here 
 [HealthSync Server](https://health-sync-e8lf.onrender.com)
+
+---
+
+## 📄 **Postman Documentation**
+Access the API documentation here: 
+[HealthSync Postman Documentation](https://documenter.getpostman.com/view/39189972/2sAYX9mKrohttps://documenter.getpostman.com/view/39189972/2sAYX9mKro)
