@@ -4,7 +4,6 @@ import Logo from "../../assets/images/logo.png"
 import UserImg from "../../assets/images/avatar-icon.png"
 import {BiMenu} from "react-icons/bi"
 import {NavLink,Link} from 'react-router-dom'
-import "../../index.css";
 import "../../App.css"
 
 
@@ -54,8 +53,8 @@ const Header = () => {
   const toggleMenu = () => menuRef.current.classList.toggle('show_menu')
 
   return (
-    <header className="bg-[url('./assets/images/mask.png')] bg-no-repeat bg-center bg-cover w-full h-[100px] leading-[100px]" ref={headerRef}>
-      <div className='max-w-full w-[1440px] px-5 mx-auto'>
+    <header className=" header flex items-center" ref={headerRef}>
+      <div className='container'>
         <div className='flex items-center justify-between'>
           {/* logo */}
           <div>
@@ -65,12 +64,12 @@ const Header = () => {
           {/* menu */}
 
           <div className="navigation" ref={menuRef} onClick={toggleMenu}>
-            <ul className='flex items-center gap-[2.7rem]'>
+            <ul className='menu flex items-center gap-[2.7rem]'>
               {
                 navLinks.map((link,index)=>
                 <li key={index}>
                   <NavLink to={link.path} 
-                  className={navClass => navClass.isActive ? 'text-[#4E545F] text-[16px] leading-7 font-[600]' : 'text-[#0067FF] text-[16px] leading-7 font-[500] hover:text-[#0067FF]'}>
+                  className={navClass => navClass.isActive ? 'text-primaryColor text-[16px] leading-7 font-[600]' : 'text-textColor text-[16px] leading-7 font-[500] hover:text-[#0067FF]'}>
                   {link.display}
                   </NavLink>  
                 </li>)
@@ -90,7 +89,7 @@ const Header = () => {
             </div>
 
             <Link to='/login'>
-            <button className='bg-[#0067FF] py-2 px-6 text-white font-[600] h-[44px] flex items-center justify-center rounded-[10px]'>Login</button>
+            <button className='bg-primaryColor py-2 px-6 text-white font-[600] h-[44px] flex items-center justify-center rounded-[50px]'>Login</button>
             </Link>
 
             <span className='md:hidden' onClick={toggleMenu}>
