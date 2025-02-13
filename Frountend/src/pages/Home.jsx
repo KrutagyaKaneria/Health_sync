@@ -3,10 +3,12 @@ import groupphoto from '../assets/images/Group 4297.png'
 import heroImg1 from '../assets/images/hero-img01.png'
 import heroImg2 from '../assets/images/hero-img02.png'
 import heroImg3 from '../assets/images/hero-img03.png'
+import createaccimg from '../assets/images/createaccimg.png'
 
 const Home = () => {
   return (
     <>
+    {/* hero section */}
       <section className='hero_section pt-[60px] 2xl:h-[800px]'>
         <div className='container'>
           <div className='flex flex-col lg:flex-row gap-[90px] items-center justify-between'>
@@ -14,7 +16,7 @@ const Home = () => {
             <div>
               <div className='lg:w-[570px]'>
                 <h1 className='text-[36px] leading-[46px] text-headingColor font-[800] md:text-[60px] md:leading-[70px]'> We help patients live a healthy, longer life.</h1>
-      <div className="w-full relative h-28 text-left text-lg text-white font-outfit">
+      <div className="w-full mt-5 relative h-28 text-left text-[20px] text-white ">
         <div className="absolute top-[27px] left-[144px] leading-[27px] flex items-center w-[573px] h-[85px]">
           <span className="w-full">
             <p className="m-0">
@@ -82,13 +84,49 @@ const Home = () => {
   </div>
 
 </div>
-
-
-  </div>
+</div>
 </div>
 </section>
+
+
+<section>
+
+<div className="w-full flex justify-center items-center h-[529px] text-left text-[40px] text-white">
+  {/* Container */}
+  <div className="relative w-[1273px] h-[364px] rounded-[10px] bg-mediumslateblue flex items-center justify-between px-10">
+    {/* Left Side - Text */}
+    <div>
+      <h2 className="text-white text-[50px] font-[800] leading-[80px]">
+        Book Appointment
+        <br />
+        With 100+ Trusted Doctors
+      </h2>
+
+      {/* Create Account Button */}
+      <button className="mt-5 bg-white text-dimgray px-6 py-3 rounded-full text-[20px] font-semibold">
+        Create account
+      </button>
+    </div>
+
+    {/* Right Side - Image (Full but Bottom-Aligned) */}
+    <img
+      className="absolute bottom-0 right-0 w-[580px] h-auto object-cover z-10"
+      alt="Create Account"
+      src={createaccimg}
+    />
+  </div>
+</div>
+
+
+
+
+
+
+
+
+</section>
 </>         
-  )
-}
+  );
+};
 
 export default Home

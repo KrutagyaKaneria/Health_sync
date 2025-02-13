@@ -13,6 +13,9 @@ export default {
     irisBlueColor: "#01B5C5",
     headingColor: "#181A1E",
     textColor: "#4E545F",
+    dimgray: "#4b5563",
+    white: "#fff",
+    mediumslateblue: "#0067ff"
 
       },
       boxShadow: {
