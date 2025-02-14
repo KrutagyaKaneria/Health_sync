@@ -19,6 +19,7 @@ import About from '../components/About/About.jsx'
 import featureImg from '../assets/images/feature-img.png'
 import videoIcon from '../assets/images/video-icon.png'
 import avtarIcon from '../assets/images/avatar-icon.png'
+import DoctorsList from '../components/Doctors/DoctorsList.jsx'
 
 
 
@@ -310,6 +311,7 @@ const Home = () => {
       expert health care.
       </p>
     </div>
+    <DoctorsList />
   </div>
 </section>
 
