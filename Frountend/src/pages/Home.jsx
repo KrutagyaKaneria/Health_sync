@@ -9,8 +9,24 @@ import icon02 from '../assets/images/icon02.png'
 import icon03 from '../assets/images/icon03.png' 
 import {BsArrowRight,} from "react-icons/bs";
 import {Link} from 'react-router-dom'
+import General_physician from '../assets/images/General_physician.svg'
+import Gynecologist from '../assets/images/Gynecologist.svg'
+import Dermatologist from '../assets/images/Dermatologist.svg'
+import Pediatricians from '../assets/images/Pediatricians.svg'
+import Neurologist from '../assets/images/Neurologist.svg'
+import Gastroenterologist from '../assets/images/Gastroenterologist.svg'
 
 const Home = () => {
+  const doctors = [
+    { name: "General_physician", img: General_physician },
+    { name: "Gynecologist", img: Gynecologist },
+    { name: "Dermatologist", img: Dermatologist },
+    { name: "Pediatricians", img: Pediatricians },
+    { name: "Neurologist", img: Neurologist },
+    { name: "Gastroenterologist", img: Gastroenterologist },
+  ];
+
+
   return (
     <>
     {/* hero section */}
@@ -184,13 +200,40 @@ const Home = () => {
         </Link>
       </div>
     </div>
-
-
-
-
   </div>
 </div>
 </section>
+
+
+{/* medical services  section */}
+<div className='container'>
+<div className='lg:w-[470px] mx-auto'>
+    <h2 className='heading text-center'>
+    Our Medical services
+    </h2>
+    <p className='text_para text-center'>
+      world-class care for everyone. Our health System Offers Unmatched,
+      expert health care.
+    </p>
+  </div>
+
+<div className="w-full relative h-[173px] text-center text-lg text-dimgray font-outfit mt-16">
+      <div className="absolute inset-0 flex justify-center gap-10">
+        {doctors.map((doctor, index) => (
+          <div key={index} className="flex flex-col items-center">
+            <img
+              src={doctor.img}
+              alt={doctor.name}
+              className="w-[125.7px] h-[125.7px] object-cover"
+            />
+            <span className="mt-2">{doctor.name}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+    </div>
+    
+
 </>         
   );
 };
