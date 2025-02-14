@@ -17,6 +17,7 @@ import Neurologist from '../assets/images/Neurologist.svg'
 import Gastroenterologist from '../assets/images/Gastroenterologist.svg'
 import About from '../components/About/About.jsx'
 import featureImg from '../assets/images/feature-img.png'
+import faqImg from '../assets/images/faq-img.png'
 import videoIcon from '../assets/images/video-icon.png'
 import avtarIcon from '../assets/images/avatar-icon.png'
 import DoctorsList from '../components/Doctors/DoctorsList.jsx'
@@ -313,6 +314,17 @@ const Home = () => {
     </div>
     <DoctorsList />
   </div>
+</section>
+
+{/* faq section */}
+<section>
+<div className="conatiner">
+  <div className="flex justify-between gap-[50px] lg:gap-0">
+    <div className='w-1/2 hidden md:block'>
+    <img src={faqImg} alt="" />
+    </div>
+  </div>
+</div>
 </section>
 
 </>         
