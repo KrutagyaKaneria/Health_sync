@@ -15,6 +15,10 @@ import Dermatologist from '../assets/images/Dermatologist.svg'
 import Pediatricians from '../assets/images/Pediatricians.svg'
 import Neurologist from '../assets/images/Neurologist.svg'
 import Gastroenterologist from '../assets/images/Gastroenterologist.svg'
+import About from '../components/About/About.jsx'
+
+
+
 
 const Home = () => {
   const doctors = [
@@ -232,7 +236,9 @@ const Home = () => {
       </div>
     </div>
     </div>
-    
+
+{/* About section */}
+<About/>
 
 </>         
   );
