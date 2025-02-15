@@ -22,6 +22,7 @@ import videoIcon from '../assets/images/video-icon.png'
 import avtarIcon from '../assets/images/avatar-icon.png'
 import DoctorsList from '../components/Doctors/DoctorsList.jsx'
 import FaqList from '../components/Faq/FaqList.jsx'
+import Testimonial from '../components/Testimonial/Testimonial.jsx'
 
 
 
@@ -332,6 +333,20 @@ const Home = () => {
 </div>
 </section>
 
+
+{/* testimonial end */}
+
+<div className='container mt-24'>
+<div className='xl:w-[470px] mx-auto'>
+      <h2 className='heading text-center'> What our patient say </h2>
+      <p className="text_para text-center">
+      World-class care for everyone. Our health System Offers Unmatched,
+      expert health care.
+      </p>
+    </div>
+
+    <Testimonial/>
+</div>
 </>         
   );
 };
