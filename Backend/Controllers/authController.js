@@ -16,8 +16,6 @@ const generateToken = user => {
     }
 )
  }
- 
-
 
 export const register = async (req,res) => {
     const {email, password, name, role, photo, gender} = req.body;
@@ -68,6 +66,8 @@ export const register = async (req,res) => {
         res.status(500).json({success:true, message:"Internal server error"})
     };
 };
+
+
 
 export const login = async (req,res) => {
     const {email} = req.body
