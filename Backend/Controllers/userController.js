@@ -52,7 +52,7 @@ export const getUserProfile = async (req,res) => {
         const {password, ...rest} = user._doc
 
         res.status(200).json({success:true, message: "Profile info is getting", data:{...rest}});
-    } catch (error) {
+    } catch (err) {
         res.status(500).json({success:false, message:"Something went wrong cannot get"});
     }
 };
