@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import signupImg from "../assets/images/signup.gif";
 import avtar from '../assets/images/doctor-img01.png'
-import { Link } from 'react-router-dom';
+import { Link , useNavigate} from 'react-router-dom';
 import uploadImageToCloudinary from '../utils/uploadCloudinary';
+import {BASE_URL} from '../config'
+import {toast} from 'react-toastify'
 
 
 
@@ -10,6 +12,8 @@ import uploadImageToCloudinary from '../utils/uploadCloudinary';
 const Signup = () => {
   const [selectedFile,setSelectedFile] = useState(null)
   const [previewURL,setPreviewURL] = useState("")
+  const[loading,setLoading] = useState(false)
+
    const [FormData, setFormData] = useState({
     name: "",  
     email: "",
@@ -18,6 +22,8 @@ const Signup = () => {
       gender: "",
       role: "patient"
     });
+
+    const navigate = useNavigate()
   
     const handleInputChange = e => {
       setFormData({ ...FormData, [e.target.name]: e.target.value});
@@ -33,6 +39,26 @@ const Signup = () => {
 
     const submitHandler = async event => {
       event.preventDefault()
+      setLoading(true)
+      try{
+        const res = await fetch(`${BASE_URL}/auth/register`,{
+          method : "POST",
+          headers:{
+            'Content-Type':'application/json'
+          },
+          body: Json.stringify(FormData)
+        })
+        const {message} = await res.json()
+        if(!res.ok) {
+          throw new Error(message)
+        }
+        setLoading(false)
+        toast.success()
+        navigate('/login')
+      }catch(err){
+        toast.error(err.message)
+        setLoading(false)
+      }
     }
   
 
