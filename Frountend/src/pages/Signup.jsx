@@ -2,6 +2,10 @@ import React, { useState } from 'react'
 import signupImg from "../assets/images/signup.gif";
 import avtar from '../assets/images/doctor-img01.png'
 import { Link } from 'react-router-dom';
+
+
+
+
 const Signup = () => {
   const [selectedFile,setSelectedFile] = useState(null)
   const [previewURL,setPreviewURL] = useState("")
