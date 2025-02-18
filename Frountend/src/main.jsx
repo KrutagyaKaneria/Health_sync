@@ -5,10 +5,18 @@ import './index.css'
 import App from './App.jsx'
 import { BrowserRouter } from 'react-router-dom'
 import "./index.css"
+import { ToastContainer } from 'react-toastify'
+import  "react-toastify/dist/ReactToastify.css"
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
+    <ToastContainer 
+    theme='dark'
+    position='top-right'
+    autoClose={3000}
+    closeOnClick
+    pauseOnHover={false}/>
     <App />
     </BrowserRouter>
   </StrictMode>,
