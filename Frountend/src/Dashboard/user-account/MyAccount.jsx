@@ -1,7 +1,17 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import userImg from '../../assets/images/doctor-img01.png'
 
+import { authContext } from '../../context/AuthContext'
+
+
 const MyAccount = () => {
+
+
+    const {dispatch} = useContext(authContext)
+
+    const handleLogout = () => {
+        dispatch({type:'LOGOUT'});
+    };
   return (
     <div className='max-w-[1170px] px-5 mx-auto'>
         <div className='grid md:grid-cols-3 gap-10'>
@@ -22,7 +32,7 @@ const MyAccount = () => {
                 </div>
 
                 <div className='mt-[50px] md:mt-[100px]'>
-                    <button className='w-full bg-[#181A1E] p-3 text-[16px] leading-7 rounded-md text-white'>Logout</button>
+                    <button onClick={handleLogout} className='w-full bg-[#181A1E] p-3 text-[16px] leading-7 rounded-md text-white'>Logout</button>
                     <button className='w-full bg-red-600 mt-4 p-3 text-[16px] leading-7 rounded-md text-white'>Delete account</button>
                 </div>
             </div>
