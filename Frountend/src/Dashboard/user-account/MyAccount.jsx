@@ -2,6 +2,8 @@ import React, { useContext,useState } from 'react'
 import userImg from '../../assets/images/doctor-img01.png'
 
 import { authContext } from '../../context/AuthContext'
+import MyBooking from './MyBooking'
+import Profile from './Profile'
 
 
 const MyAccount = () => {
@@ -14,7 +16,8 @@ const MyAccount = () => {
         dispatch({type:'LOGOUT'});
     };
   return (
-    <div className='max-w-[1170px] px-5 mx-auto'>
+   <section>
+     <div className='max-w-[1170px] px-5 mx-auto'>
         <div className='grid md:grid-cols-3 gap-10'>
             <div className='pb-[50px] px-[30px] rounded-md'>
                 <div className='flex items-center justify-center'>
@@ -44,10 +47,14 @@ const MyAccount = () => {
                     <button onClick={() => setTab('bookings')} className={`${tab==='bookings' && 'bg-primaryColor text-white font-normal'} p-2 mr-5 px-5 rounded-md text-headingColor font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}>My Bookings</button>
                     <button  onClick={() => setTab('settings')} className={` ${tab==='settings' && 'bg-primaryColor text-white font-normal'}  p-2 px-5 rounded-md text-headingColor font-semibold text-[16px] leading-7 border border-solid border-primaryColor`} >profile Settings</button>
                 </div>
+
+                {tab === 'bookings' && <MyBooking />}
+                {tab === 'settings' && <Profile/>}
+
             </div>
         </div>
-      
     </div>
+   </section>
   )
 }
 
