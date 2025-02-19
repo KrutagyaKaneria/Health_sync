@@ -1,13 +1,14 @@
-import React, { useContext } from 'react'
+import React, { useContext,useState } from 'react'
 import userImg from '../../assets/images/doctor-img01.png'
 
 import { authContext } from '../../context/AuthContext'
 
 
 const MyAccount = () => {
+    const [tab,setTab] = useState('booking')
 
+    const {dispatch} = useContext(authContext);
 
-    const {dispatch} = useContext(authContext)
 
     const handleLogout = () => {
         dispatch({type:'LOGOUT'});
@@ -34,6 +35,14 @@ const MyAccount = () => {
                 <div className='mt-[50px] md:mt-[100px]'>
                     <button onClick={handleLogout} className='w-full bg-[#181A1E] p-3 text-[16px] leading-7 rounded-md text-white'>Logout</button>
                     <button className='w-full bg-red-600 mt-4 p-3 text-[16px] leading-7 rounded-md text-white'>Delete account</button>
+                </div>
+
+            </div>
+
+            <div className='md:col-span-2 md:px-[30px]'>
+                <div>
+                    <button onClick={() => setTab('bookings')} className={`${tab==='bookings' && 'bg-primaryColor text-white font-normal'} p-2 mr-5 px-5 rounded-md text-headingColor font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}>My Bookings</button>
+                    <button  onClick={() => setTab('settings')} className={` ${tab==='settings' && 'bg-primaryColor text-white font-normal'}  p-2 px-5 rounded-md text-headingColor font-semibold text-[16px] leading-7 border border-solid border-primaryColor`} >profile Settings</button>
                 </div>
             </div>
         </div>
