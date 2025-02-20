@@ -20,8 +20,8 @@ export const authenticate = async (req,res,next) => {
 
         const decoded = jwt.verify(token,process.env.JWT_SECRET_KEY);
 
-        req.userId = decoded.id
-        req.role = decoded.role
+        req.user = { id: decoded.id, role: decoded.role };
+
 
         console.log(authToken)
 
@@ -39,7 +39,8 @@ export const authenticate = async (req,res,next) => {
 export const restrict = (roles) => async (req, res, next) => {
     console.log("🚀 restrict middleware is running"); // Check if it even runs
 
-    const userId = req.userId;
+    const userId = req.user?.id;
+    console.log("User ID from Token:", userId);
     console.log("User ID from Token:", userId); // Check if userId exists
 
     let user;
