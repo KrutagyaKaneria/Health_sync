@@ -1,38 +1,40 @@
-import React from 'react'
-import { useEffect,useState } from 'react'
-import { token } from '../config'
+import { useEffect, useState } from "react";
+import { token } from "../config"; // Ensure token is imported correctly
 
 const useFetchData = (url) => {
-    const [data,setData] = useState([])
-    const [loading,setLoding] = useState(false)
-    const [error,setError] = useState(null)
+  const [data, setData] = useState(null); // Use null instead of empty array
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            setLoding(true);
-            console.log("Fetching data from:", url);  // Debugging log
-            try {
-                const res = await fetch(url, {
-                    headers: { Authorization: `Bearer ${token}` }
-                });
-                const result = await res.json();
-                if (!res.ok) {
-                    throw new Error(result.message + '☹️');
-                }
-                setData(result.data);
-                setLoding(false);
-            } catch (err) {
-                setLoding(false);
-                setError(err.message);
-            }
-        };
-        fetchData();
-    }, [url]);
-    
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
 
-  return {
-    data,loading,error,
-  };
+      try {
+        const res = await fetch(url, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        const result = await res.json();
+
+        if (!res.ok) {
+          throw new Error(result.message || "Something went wrong ☹️");
+        }
+
+        setData(result.data);
+        setError(null);
+      } catch (err) {
+        console.error("Fetch error:", err.message);
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+      fetchData();
+  }, [url]);
+
+  return { data, loading, error };
 };
 
-export default useFetchData
+export default useFetchData;

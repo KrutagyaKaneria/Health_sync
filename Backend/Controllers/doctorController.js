@@ -1,4 +1,4 @@
-import BookingSchema from "../models/BookingSchema.js";
+import Booking from "../models/BookingSchema.js";
 import Doctor from "../models/DoctorSchema.js";
 
 export const updateDoctor = async(req,res) => {
@@ -60,18 +60,33 @@ export const getAllDoctor = async(req,res) => {
 }
 
 
-export const getDoctorProfile = async(req,res) => {
-    const doctorId = req.userId
-        try {
-            const doctor = await Doctor.findById(doctorId)
-            if(!doctor){
-                return res. status(404).json({sucecess:false, message:'Doctor not found'})
-            }
-            const {password, ...rest} = doctor._doc;
-            const appointments = await Booking.find({doctor:doctorId})
-    
-            res.status(200).json({success:true, message: "Profile info is getting", data:{...rest,appointments}});
-        } catch (err) {
-            res.status(500).json({success:false, message:"Something went wrong cannot get"});
+export const getDoctorProfile = async (req, res) => {
+    const doctorId = req.user?.id; // ✅ Correct lowercase "id"
+
+    try {
+        console.log("User in getDoctorProfile:", req.user); // Debugging
+
+        if (!doctorId) {
+            return res.status(401).json({ success: false, message: "Unauthorized: No user ID found" });
         }
-}
+
+        const doctor = await Doctor.findById(doctorId); // ✅ This line is NOT removed!
+        if (!doctor) {
+            return res.status(404).json({ success: false, message: "Doctor not found" });
+        }
+
+        const { password, ...rest } = doctor._doc;
+        const appointments = await Booking.find({ doctor: doctorId });
+
+        res.status(200).json({
+            success: true,
+            message: "Profile info retrieved",
+            data: { ...rest, appointments }
+        });
+    } catch (err) {
+        console.error("Error in getDoctorProfile:", err);
+        res.status(500).json({ success: false, message: "Something went wrong, cannot get profile" });
+    }
+};
+
+
