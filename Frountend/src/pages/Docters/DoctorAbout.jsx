@@ -1,14 +1,14 @@
 import React from 'react'
 import { formateDate } from '../../utils/formateData.js'
 
-const DoctorAbout = () => {
+const DoctorAbout = ({name,about,qualifications,experiences}) => {
   return (
     <div>
     <div>
       <h3 className='text-[20px] leading-[30px] text-headingColor font-semibold flex items-center gap-2'>
         About of
-        <span>
-            jiten Panjwani
+        <span className='text-irisBlueColor font-bold text-[24px] leading-6'>
+            Hardh Kava
         </span>
       </h3>
       <p className='text_para'>
