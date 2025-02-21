@@ -6,6 +6,7 @@ import { BASE_URL } from '../../config';
 import Tabs from './Tabs';
 import starIcon from '../../assets/images/Star.png'
 import DoctorAbout from '../../pages/Docters/DoctorAbout.jsx';
+import Profile from './Profile.jsx';
 
 
 const DashBoard = () => {
@@ -80,7 +81,7 @@ const DashBoard = () => {
 
                   </div>
                 </div>
-                <DoctorAbout name={data.name} about={data.about} qualifications={data.qualifications} experiences={data.experiences}/>
+                <DoctorAbout name={data?.name} about={data?.about} qualifications={data?.qualifications} experiences={data?.experiences}/>
               </div>
               
               
@@ -89,7 +90,7 @@ const DashBoard = () => {
 
               )}
               {tab==='appointments' && <div>Appointments</div> }
-              {tab==='settings' && <div>Profile Settings</div> }
+              {tab==='settings' && <Profile/>  }
             </div>
           </div>
           </div>
