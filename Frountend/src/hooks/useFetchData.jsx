@@ -1,40 +1,36 @@
-import { useEffect, useState } from "react";
-import { token } from "../config"; // Ensure token is imported correctly
+import React from 'react'
+import { useEffect,useState } from 'react'
+import { token } from '../config'
 
 const useFetchData = (url) => {
-  const [data, setData] = useState(null); // Use null instead of empty array
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+    const [data,setData] = useState([])
+    const [loading,setLoading] = useState(false)
+    const [error,setError] = useState(null)
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
+    useEffect(() =>{
+        const fetchData = async() => {
+        setLoading(true)
+          try {
+            const res = await fetch(url, {
+                headers:{Authorization: `Bearer ${token}`}
+            });
+            const result = await res.json()
+            if(!res.ok){
+               throw new Error(result.message + '☹️')
+            }
+            setData(result.data)
+            setLoading(false)
+          } catch (err) {
+            setLoading(false)
+            setError(err.message)
+          }
+        };
+        fetchData()
+    },[url])
 
-      try {
-        const res = await fetch(url, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-
-        const result = await res.json();
-
-        if (!res.ok) {
-          throw new Error(result.message || "Something went wrong ☹️");
-        }
-
-        setData(result.data);
-        setError(null);
-      } catch (err) {
-        console.error("Fetch error:", err.message);
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-      fetchData();
-  }, [url]);
-
-  return { data, loading, error };
+  return {
+    data,loading,error,
+  };
 };
 
-export default useFetchData;
+export default useFetchData

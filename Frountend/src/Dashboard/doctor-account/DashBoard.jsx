@@ -90,7 +90,7 @@ const DashBoard = () => {
 
               )}
               {tab==='appointments' && <div>Appointments</div> }
-              {tab==='settings' && <Profile/>  }
+              {tab==='settings' && <Profile doctorData={data} />  }
             </div>
           </div>
           </div>
