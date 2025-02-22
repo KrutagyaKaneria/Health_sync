@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import DoctorCard from '../../components/Doctors/DoctorCard'
 import {doctors} from '../../assets/data/doctors.js'
 import Testimonial from '../../components/Testimonial/Testimonial.jsx'
@@ -8,7 +8,27 @@ import Loader from '../../components/Loader/Loading.jsx'
 import Error from '../../components/Error/Error.jsx'
 
 const Doctors = () => {
-  const{data:doctors,loading,error} = useFetchData(`${BASE_URL}/doctors`)
+  
+  const [query,setQuery] = useState("")
+  const [debounceQuery,setDebounceQuery] = useState("")
+
+  const handleSearch = () => {
+    setQuery(query.trim());
+    console.log("handle search");
+  }
+
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setDebounceQuery(query);
+    },700);
+    
+    return () => clearTimeout(timeout);
+  },[query])
+
+  const{data:doctors,loading,error} = useFetchData(`${BASE_URL}/doctors?query=${debounceQuery}`);
+
+
   return (
     <>
     {loading && <Loader/>}
@@ -21,8 +41,10 @@ const Doctors = () => {
           type="search"
           className='py-4 pl-4 bg-transparent w-full focus:outline-none cursor-pointer placeholder:text-textColor'
           placeholder='Search Doctor by name or specification'
+          value={query}
+          onChange={e=> setQuery(e.target.value)}
            />
-           <button className='btn mt-0 rounded-[0px] rounded-r-md'>
+           <button className='btn mt-0 rounded-[0px] rounded-r-md' onClick={handleSearch}>
             Search
            </button>
         </div>
