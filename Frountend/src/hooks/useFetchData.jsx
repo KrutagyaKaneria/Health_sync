@@ -6,6 +6,9 @@ const useFetchData = (url) => {
     const [data,setData] = useState([])
     const [loading,setLoading] = useState(false)
     const [error,setError] = useState(null)
+    const storedToken = localStorage.getItem("token"); 
+console.log("Token being used for fetch:", storedToken);
+
 
     useEffect(() =>{
         const fetchData = async() => {

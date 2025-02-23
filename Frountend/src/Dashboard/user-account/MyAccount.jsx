@@ -1,6 +1,4 @@
 import React, { useContext,useState } from 'react'
-import userImg from '../../assets/images/doctor-img01.png'
-
 import { authContext } from '../../context/AuthContext'
 import MyBooking from './MyBooking'
 import Profile from './Profile'
