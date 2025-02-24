@@ -7,6 +7,7 @@ import AuthRoute from './Routes/auth.js'
 import UserRoute from './Routes/user.js'
 import doctorRoute from "./Routes/doctor.js"
 import reviewRoute from "./Routes/review.js"
+import bookingRoute from './Routes/booking.js'
 
 
 dotenv.config() 
@@ -50,6 +51,7 @@ app.use('/api/v1/auth', AuthRoute);
 app.use('/api/v1/users', UserRoute);
 app.use('/api/v1/doctors', doctorRoute);
 app.use('/api/v1/reviews', reviewRoute);
+app.use('/api/v1/booking',bookingRoute);
 
 
 app.listen(port, () => {
