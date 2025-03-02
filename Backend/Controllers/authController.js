@@ -69,46 +69,49 @@ export const register = async (req,res) => {
 
 
 
-export const login = async (req,res) => {
-    const {email} = req.body
-
+export const login = async (req, res) => {
+    const { email } = req.body;
 
     try {
-        let user = null
+        let user = null;
 
-        const patient = await User.findOne({email})
-        const doctor = await Doctor.findOne({email})
+        const patient = await User.findOne({ email });
+        const doctor = await Doctor.findOne({ email });
 
-        if(patient){
-            user=patient
+        if (patient) {
+            user = patient;
         }
-        if(doctor){
-            user=doctor
-        }
-
-        // check if user exits or not 
-
-        if(!user){
-            return res.ststus(404).json({message: "User not found"});
+        if (doctor) {
+            user = doctor;
         }
 
-        const isPasswordMatch = await bcrypt.compare(
-            req.body.password,
-            user.password);
-
-        if(!isPasswordMatch){
-            return res.status(400).json({status:false, message:"Invalid credental"});
+        // Check if user exists or not
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
         }
 
-        // get toke
+        const isPasswordMatch = await bcrypt.compare(req.body.password, user.password);
 
+        if (!isPasswordMatch) {
+            return res.status(400).json({ status: false, message: "Invalid credentials" });
+        }
+
+        // Get token
         const token = generateToken(user);
 
-        const {password,role,appointments, ...rest} = user._doc
+        const { password, role, appointments, ...rest } = user._doc;
 
-        res.status(200).json({status:true, message:"Successfuly login" , token, data: {...rest}, role});
+        // ✅ Send userId along with response
+        res.status(200).json({
+            status: true,
+            message: "Successfully logged in",
+            token,
+            userId: user._id,  // <-- Add this
+            data: { ...rest },
+            role,
+        });
 
     } catch (err) {
-        res.status(500).json({status:false, message:"Failed login"});
+        res.status(500).json({ status: false, message: "Failed login" });
     }
 };
