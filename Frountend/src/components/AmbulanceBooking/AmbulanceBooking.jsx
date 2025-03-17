@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BASE_URL } from '../config';
+import { BASE_URL } from '../../config';
 import { toast } from 'react-toastify';
 import HashLoader from 'react-spinners/HashLoader';
 
