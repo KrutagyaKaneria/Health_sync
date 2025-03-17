@@ -9,7 +9,7 @@ const AmbulanceBookingSchema = new mongoose.Schema({
     enum: ["pending", "running", "completed"],
     default: "pending",
   },
-  driverId: { type: mongoose.Types.ObjectId, ref: "User" }, // Assigned driver
+  driverId: { type: mongoose.Types.ObjectId, ref: "User" },
   createdAt: { type: Date, default: Date.now },
 });
 

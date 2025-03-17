@@ -15,11 +15,10 @@ const generateToken = (user) => {
 };
 
 export const register = async (req, res) => {
-  const { email, password, name, role, photo, gender, licenseNumber, ambulanceId } = req.body;
+  const { email, password, name, role, photo, gender, licenseNumber, ambulanceNumber } = req.body;
   try {
     let user = null;
 
-    // Check if user exists based on role
     if (role === "patient" || role === "driver") {
       user = await User.findOne({ email });
     } else if (role === "doctor") {
@@ -43,6 +42,10 @@ export const register = async (req, res) => {
         role,
       });
     } else if (role === "driver") {
+      if (!licenseNumber || !ambulanceNumber) {
+        return res.status(400).json({ success: false, message: "licenseNumber and ambulanceNumber are required for drivers" });
+      }
+      console.log("Registering driver with:", { email, name, licenseNumber, ambulanceNumber });
       user = new User({
         name,
         email,
@@ -51,7 +54,7 @@ export const register = async (req, res) => {
         gender,
         role,
         licenseNumber,
-        ambulanceId,
+        ambulanceNumber,
       });
     } else if (role === "doctor") {
       user = new Doctor({
@@ -67,7 +70,11 @@ export const register = async (req, res) => {
     await user.save();
     res.status(200).json({ success: true, message: "User successfully created" });
   } catch (err) {
-    res.status(500).json({ success: false, message: "Internal server error" });
+    console.error("Error in register:", err);
+    if (err.name === "ValidationError") {
+      return res.status(400).json({ success: false, message: "Validation error", errors: err.errors });
+    }
+    res.status(500).json({ success: false, message: "Internal server error", error: err.message });
   }
 };
 
