@@ -4,7 +4,7 @@ import { BASE_URL } from '../config';
 import { authContext } from '../context/AuthContext.jsx';
 import { toast } from 'react-toastify';
 import HashLoader from 'react-spinners/HashLoader.js';
-import { auth, googleProvider, facebookProvider } from '../pages/firebase.js';
+import { auth, googleProvider, facebookProvider } from './firebase.js';
 import { signInWithPopup } from 'firebase/auth';
 
 const Login = () => {
@@ -47,11 +47,20 @@ const Login = () => {
       });
 
       toast.success("Login successful!");
-      // Redirect based on role
-      if (result.role === "driver") {
-        navigate('/driver-dashboard');
-      } else {
-        navigate('/home');
+
+      // Role-based redirection
+      switch (result.role) {
+        case "driver":
+          navigate('/drivers/profile/me'); // Updated route
+          break;
+        case "doctor":
+          navigate('/doctors/profile/me');
+          break;
+        case "patient":
+          navigate('/users/profile/me');
+          break;
+        default:
+          navigate('/home');
       }
     } catch (err) {
       toast.error(err.message || "Something went wrong!");
