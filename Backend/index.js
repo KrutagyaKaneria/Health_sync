@@ -3,6 +3,8 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import http from 'http';
+import { Server } from 'socket.io';
 import AuthRoute from "./Routes/auth.js";
 import UserRoute from "./Routes/user.js";
 import doctorRoute from "./Routes/doctor.js";
@@ -15,6 +17,14 @@ import driverRoutes from './Routes/driverRoutes.js';
 dotenv.config();
 
 const app = express();
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: "*", // Allow all origins
+    methods: ["GET", "POST"],
+  },
+});
+
 const port = process.env.PORT || 8000;
 
 const corsOptions = {
@@ -44,6 +54,9 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(cors(corsOptions));
 
+// Pass io to routes
+app.set('io', io);
+
 // Routes
 app.use("/api/v1/auth", AuthRoute);
 app.use("/api/v1/users", UserRoute);
@@ -54,7 +67,21 @@ app.use("/api/v1/bookings", bookingRoute);
 app.use("/api/v1/email", emailRoute);
 app.use("/api/v1/ambulance", ambulanceRoute);
 
-app.listen(port, () => {
+// Socket.io Connection
+io.on('connection', (socket) => {
+  console.log('A client connected:', socket.id);
+
+  socket.on('joinRoom', (userId) => {
+    socket.join(userId);
+    console.log(`User ${userId} joined room`);
+  });
+
+  socket.on('disconnect', () => {
+    console.log('A client disconnected:', socket.id);
+  });
+});
+
+server.listen(port, () => {
   connectDB();
   console.log(`🚀 Server is running on port ${port}`);
 });
