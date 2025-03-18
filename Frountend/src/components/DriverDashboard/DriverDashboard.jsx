@@ -3,14 +3,40 @@ import { BASE_URL } from '../../config';
 import { toast } from 'react-toastify';
 import HashLoader from 'react-spinners/HashLoader';
 import useFetchData from '../../hooks/useFetchData.jsx';
+import io from 'socket.io-client';
+
+const socket = io('http://localhost:5000'); // Updated to match backend port
 
 const DriverDashboard = () => {
   const [newRequests, setNewRequests] = useState([]);
   const [myBookings, setMyBookings] = useState([]);
   const [loading, setLoading] = useState(false);
   const token = localStorage.getItem("token");
+  const driverId = localStorage.getItem("userId");
 
-  const { data: driverData, loading: profileLoading, error: profileError } = useFetchData(`${BASE_URL}/drivers/profile/me`); // Updated endpoint
+  const { data: driverData, loading: profileLoading, error: profileError } = useFetchData(`${BASE_URL}/drivers/profile/me`);
+
+  useEffect(() => {
+    socket.emit('joinRoom', driverId);
+
+    socket.on('newBooking', (booking) => {
+      setNewRequests(prev => [...prev, booking]);
+      toast.info('New ambulance request received!');
+    });
+
+    socket.on('bookingUpdate', ({ bookingId, status }) => {
+      setNewRequests(prev => prev.filter(b => b._id !== bookingId));
+      setMyBookings(prev => prev.map(b => b._id === bookingId ? { ...b, status } : b));
+      toast.info(`Booking ${bookingId} updated to ${status}`);
+    });
+
+    fetchDashboard();
+
+    return () => {
+      socket.off('newBooking');
+      socket.off('bookingUpdate');
+    };
+  }, [driverId]);
 
   const fetchDashboard = async () => {
     setLoading(true);
@@ -31,10 +57,6 @@ const DriverDashboard = () => {
     }
   };
 
-  useEffect(() => {
-    fetchDashboard();
-  }, []);
-
   const handleAccept = async (bookingId) => {
     setLoading(true);
     try {
@@ -46,8 +68,9 @@ const DriverDashboard = () => {
       if (!res.ok) {
         throw new Error(result.message || "Failed to accept booking");
       }
+      setNewRequests(prev => prev.filter(b => b._id !== bookingId));
+      setMyBookings(prev => [...prev, result.data]);
       toast.success("Booking accepted!");
-      fetchDashboard();
     } catch (err) {
       toast.error(err.message || "Something went wrong!");
     } finally {
@@ -71,7 +94,6 @@ const DriverDashboard = () => {
         throw new Error(result.message || "Failed to end ride");
       }
       toast.success("Ride completed!");
-      fetchDashboard();
     } catch (err) {
       toast.error(err.message || "Something went wrong!");
     } finally {
@@ -130,7 +152,7 @@ const DriverDashboard = () => {
                   <div key={booking._id} className='mb-3 p-3 border rounded-md'>
                     <p>Pickup: {booking.pickupAddress}</p>
                     <p>Destination: {booking.destination}</p>
-                    <p>Status: {booking.status}</p>
+                    <p>Status: <span className={booking.status === 'pending' ? 'text-yellow-500' : booking.status === 'running' ? 'text-green-500' : 'text-blue-500'}>{booking.status}</span></p>
                     {booking.status === "running" && (
                       <button
                         onClick={() => handleEndRide(booking._id)}
