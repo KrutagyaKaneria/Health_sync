@@ -7,6 +7,19 @@ export const bookAmbulance = async (req, res) => {
   const patientId = req.user.id;
 
   try {
+    // Check for active bookings (pending or running)
+    const activeBooking = await AmbulanceBooking.findOne({
+      patientId,
+      status: { $in: ["pending", "running"] },
+    });
+
+    if (activeBooking) {
+      return res.status(400).json({
+        success: false,
+        message: "You already have an active ambulance booking. Please wait until it’s completed.",
+      });
+    }
+
     const booking = new AmbulanceBooking({
       patientId,
       pickupAddress,
@@ -24,12 +37,10 @@ export const bookAmbulance = async (req, res) => {
     const subject = "New Ambulance Booking Request";
     const message = `A new ambulance booking request has been made.\nPickup: ${pickupAddress}\nDestination: ${destination}\nBooking ID: ${booking._id}`;
     
-    // Send emails to all drivers
     await Promise.all(
       driverEmails.map((email) => sendEmail(email, subject, { text: message }))
     );
 
-    // Socket.io: Notify all drivers
     drivers.forEach(driver => {
       io.to(driver._id.toString()).emit('newBooking', booking);
     });
@@ -41,6 +52,7 @@ export const bookAmbulance = async (req, res) => {
   }
 };
 
+// Rest of the controller remains unchanged
 export const acceptBooking = async (req, res) => {
   const bookingId = req.params.id;
   const driverId = req.user.id;
@@ -58,7 +70,6 @@ export const acceptBooking = async (req, res) => {
     booking.status = "running";
     await booking.save();
 
-    // Socket.io: Notify patient and driver
     const io = req.app.get('io');
     io.to(booking.patientId.toString()).emit('bookingUpdate', { bookingId, status: 'running' });
     io.to(driverId).emit('bookingUpdate', { bookingId, status: 'running' });
@@ -76,7 +87,6 @@ export const updateBookingStatus = async (req, res) => {
   const driverId = req.user.id;
 
   try {
-    // Validate status value
     if (!["pending", "running", "completed"].includes(status)) {
       return res.status(400).json({ success: false, message: "Invalid status value" });
     }
@@ -89,7 +99,6 @@ export const updateBookingStatus = async (req, res) => {
     booking.status = status;
     const updatedBooking = await booking.save();
 
-    // Socket.io: Notify patient and driver
     const io = req.app.get('io');
     io.to(booking.patientId.toString()).emit('bookingUpdate', { bookingId, status });
     io.to(driverId).emit('bookingUpdate', { bookingId, status });
