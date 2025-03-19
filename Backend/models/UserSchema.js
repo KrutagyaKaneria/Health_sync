@@ -8,12 +8,14 @@ const UserSchema = new mongoose.Schema({
   photo: { type: String },
   role: {
     type: String,
-    enum: ["patient", "admin"],
+    enum: ["patient", "admin", "driver"],
     default: "patient",
   },
   gender: { type: String, enum: ["male", "female", "other"] },
   bloodType: { type: String },
   appointments: [{ type: mongoose.Types.ObjectId, ref: "Appointment" }],
+  licenseNumber: { type: String, required: function () { return this.role === "driver"; } },
+  ambulanceNumber: { type: String, required: function () { return this.role === "driver"; } }, // New field
 });
 
 export default mongoose.model("User", UserSchema);
