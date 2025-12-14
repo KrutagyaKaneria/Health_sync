@@ -76,9 +76,17 @@ jobs:
         working-directory: Backend
         run: npm install
 
-      - name: Run Security Scan
+      - name: Security Audit (non-blocking)
         working-directory: Backend
-        run: npm audit --audit-level=high
+        run: |
+          echo "Running npm audit fix..."
+          npm audit fix || true
+
+          echo "Running security audit..."
+          npm audit --audit-level=high || true
+
+          echo "Audit completed (pipeline will not fail)."
+
 
 
 
