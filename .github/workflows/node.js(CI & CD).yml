@@ -28,25 +28,19 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          # ❗ Removed cache to avoid lock file requirement
-          # cache: 'npm'
 
-      # FIX: Automatically detect lock file
       - name: Install Dependencies
-        run: |
-          if [ -f package-lock.json ]; then
-            echo "package-lock.json found → Using npm ci"
-            npm ci
-          else
-            echo "package-lock.json not found → Using npm install"
-            npm install
-          fi
+        working-directory: Backend
+        run: npm install
 
       - name: Run Build
+        working-directory: Backend
         run: npm run build --if-present
 
       - name: Run Tests
+        working-directory: Backend
         run: npm test
+
 
 
   # -------------------------------
@@ -63,14 +57,17 @@ jobs:
           node-version: 20
 
       - name: Install Dependencies
+        working-directory: Backend
         run: npm install
 
       - name: Run ESLint
+        working-directory: Backend
         run: npm run lint
 
 
+
   # -------------------------------
-  # 3️⃣ SECURITY AUDIT JOB
+  # 3️⃣ SECURITY SCAN JOB
   # -------------------------------
   security:
     runs-on: ubuntu-latest
@@ -83,10 +80,13 @@ jobs:
           node-version: 20
 
       - name: Install Dependencies
+        working-directory: Backend
         run: npm install
 
       - name: NPM Audit Security Check
+        working-directory: Backend
         run: npm audit --audit-level=high
+
 
 
   # -------------------------------
@@ -106,14 +106,15 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build Docker Image
-        run: docker build -t krutagyakaneria/nodejs_cicd_workflow:${{ github.sha }} .
+        run: docker build -t krutagyakaneria/nodejs_cicd_workflow:${{ github.sha }} Backend
 
       - name: Push Docker Image
         run: docker push krutagyakaneria/nodejs_cicd_workflow:${{ github.sha }}
 
 
+
   # -------------------------------
-  # 5️⃣ DEPLOYMENT JOB
+  # 5️⃣ DEPLOY JOB
   # -------------------------------
   deploy:
     runs-on: ubuntu-latest
