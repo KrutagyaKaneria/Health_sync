@@ -26,6 +26,7 @@ A **web-based platform** connecting patients, doctors, and hospitals in an effic
 - **Quick Appointment Booking:** Simplifying the process.
 - **Doctor and Hospital Profile Management:** Unified access to information.
 - **Centralized Dashboards:** Personalized interfaces for patients, doctors, and hospitals.
+- **Quick Appointment Booking:** Simplifying the process.
 
 ---
 
