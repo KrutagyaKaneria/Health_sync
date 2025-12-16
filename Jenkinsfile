@@ -1,9 +1,6 @@
 pipeline {
     agent any
 
-    tools {
-        nodejs 'node-20'
-    }
 
     environment {
         DOCKER_IMAGE = "krutagyakaneria/nodejs_cicd_workflow"
