@@ -12,6 +12,12 @@ import DriverDashboard from '../components/DriverDashboard/DriverDashboard'; // 
 import CheckoutSuccess from '../pages/Docters/CheckoutSuccess';
 import { Route, Routes } from 'react-router-dom';
 import ProtectedRoute from './ProtectedRoute';
+import AppointmentBooking from '../pages/DoctorAppointmentPage'
+
+
+
+import {Route, Routes} from 'react-router-dom'
+import ProtectedRoute from './ProtectedRoute'
 
 const Routers = () => {
   return (
@@ -55,6 +61,18 @@ const Routers = () => {
           </ProtectedRoute>
         } 
       />
+      <Route path='/' element={<Home/>}/>
+      <Route path='/home' element={<Home/>}/>
+      <Route path='/doctors' element={<Doctors/>}/>
+      <Route path='/doctors/:id' element={<DoctorDetails/>}/>
+      <Route path='/login' element={<Login/>}/>
+      <Route path='/register' element={<Signup/>}/>
+      <Route path='/contact' element={<Contact/>}/>
+      <Route path='/services' element={<Services/>}/>
+      <Route path="/doctors/:doctorId/book"element={<AppointmentBooking />}/>
+      <Route path='/checkout-success' element={<CheckoutSuccess/>}/>
+      <Route path='/users/profile/me' element={<ProtectedRoute allowedRoles={['patient']}><MyAccount/></ProtectedRoute>}/>
+      <Route path='/doctors/profile/me' element={<ProtectedRoute allowedRoles={['doctor']}><DashBoard/></ProtectedRoute>}/>
     </Routes>
   );
 };
