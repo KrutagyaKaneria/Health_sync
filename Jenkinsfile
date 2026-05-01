@@ -5,10 +5,6 @@ pipeline {
         nodejs 'node18'
     }
 
-    environment {
-        DOCKER_IMAGE = "krutagyakaneria/nodejs_cicd_workflow"
-    }
-
     stages {
 
         stage('Install Dependencies') {
@@ -46,22 +42,9 @@ pipeline {
             }
         }
 
-        stage('Docker Build & Push') {
+        stage('Pipeline Complete') {
             steps {
-                script {
-                    docker.withRegistry('', 'dockerhub-creds') {
-                        def app = docker.build("${DOCKER_IMAGE}:${env.BUILD_NUMBER}", "Backend")
-                        app.push()
-                    }
-                }
-            }
-        }
-
-        stage('Deploy to Render') {
-            steps {
-                withCredentials([string(credentialsId: 'render-webhook', variable: 'WEBHOOK')]) {
-                    sh 'curl -X POST $WEBHOOK'
-                }
+                echo 'CI Pipeline executed successfully!'
             }
         }
     }
